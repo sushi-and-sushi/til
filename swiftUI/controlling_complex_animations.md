@@ -31,7 +31,7 @@ struct TwoPhaseAnimationView: View {
 }
 ```
 
-#### フェーズのリストを定義する
+<!-- #### フェーズのリストを定義する -->
 
 <!-- ```Swift
 private enum AnimationPhase: CaseIterable {
