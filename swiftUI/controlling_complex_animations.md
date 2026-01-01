@@ -24,7 +24,8 @@ struct TwoPhaseAnimationView: View {
         EmojiView(emoji: emoji)
             // 配列で渡した2つのフェーズをループする. 配列順に再生する
             .phaseAnimator([false, true]) { content, phase in
-                // フェーズのBool値によって、 -40.0 と 0.0 で切り替わる
+                // 変化前、変化後をcontentに対して指定することで、アニメーションさせる
+                // フェーズのBool値によって、 -40.0 と 0.0 を切り替える
                 // .offset　modifierは表示した場所から指定した分だけズラす
                 content.offset(y: phase ? -40.0 : 0.0)
             }
@@ -46,7 +47,7 @@ struct TwoPhaseAnimationView: View {
             .phaseAnimator([false, true], trigger: likeCount) { content, phase in
                 content.offset(y: phase ? -40.0 : 0.0)
             } animation: { phase in
-                // フェーズ毎にAnimationを変更している.単に.bouncyと書くだけでも可能
+                // フェーズ毎にAnimationを変更している.単に.bouncyと一つの種類を指定することも可能
                 phase ? .bouncy : .default
             }
             .onTapGesture {
@@ -56,9 +57,11 @@ struct TwoPhaseAnimationView: View {
 }
 ```
 
-<!-- #### フェーズのリストを定義する -->
+### 段階をより増やしてアニメーションする
 
-<!-- ```Swift
+#### フェーズのリストを定義する
+
+```Swift
 private enum AnimationPhase: CaseIterable {
     case initial
     case move
@@ -81,8 +84,36 @@ private enum AnimationPhase: CaseIterable {
         }
     }
 }
-``` -->
+```
 
-<!-- TODO：ここから再開する。To animate an emoji, apply the phaseAnimator(_:trigger:content:animation:) modifier to the EmojiView. Provide the animator all cases from the custom AnimationPhase type. Then change the content based on the phase by applying the scaleEffect(_:anchor:) and offset(x:y:) modifiers. The values passed into these modifiers come from the computed properties, which helps keep the view code more readable. -->
+#### Viewを調整する
+
+```Swift
+struct ThreePhaseAnimationView: View {
+    var emoji: String
+    @State private var likeCount = 1
+
+    var body: some View {
+        EmojiView(emoji: emoji)
+            // AnimationPhase.allCasesでenumで書いたケースを対象としている
+            .phaseAnimator(AnimationPhase.allCases, trigger: likeCount) { content, phase in
+                content
+                    .scaleEffect(phase.scaleEffect)
+                    .offset(y: phase.verticalOffset)
+            } animation: { phase in
+                // AnimationPhaseのケース毎にアニメーション種別を指定
+                switch phase {
+                case .initial: .smooth
+                case .move: .easeInOut(duration: 0.3)
+                case .scale: .spring(duration: 0.3, bounce: 0.7)
+                }
+            }
+            .onTapGesture {
+                likeCount += 1
+            }
+    }
+}
+```
 
 ## KeyframeAnimator
+
