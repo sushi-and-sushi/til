@@ -9,9 +9,31 @@
 
 ## PhaseAnimator
 
-- フェーズのリストを定義する
+指定したフェーズのセットに基づいて、アニメーション化したトランジションを作成する
+
+### 2段階でアニメーションする
+
+「上に移動する」「下に移動する」という2つのフェーズが存在する場合、Bool値で状態遷移を表現できる
 
 ```Swift
+struct TwoPhaseAnimationView: View {
+    var emoji: String
+
+    var body: some View {
+        EmojiView(emoji: emoji)
+            // 配列で渡した2つのフェーズをループする
+            .phaseAnimator([false, true]) { content, phase in
+                // フェーズのBool値によって、 -40.0 と 0.0 で切り替わる
+                // .offset　modifier は表示した場所から指定した分だけズラす
+                content.offset(y: phase ? -40.0 : 0.0)
+            }
+    }
+}
+```
+
+#### フェーズのリストを定義する
+
+<!-- ```Swift
 private enum AnimationPhase: CaseIterable {
     case initial
     case move
@@ -34,10 +56,8 @@ private enum AnimationPhase: CaseIterable {
         }
     }
 }
-```
+``` -->
 
 <!-- TODO：ここから再開する。To animate an emoji, apply the phaseAnimator(_:trigger:content:animation:) modifier to the EmojiView. Provide the animator all cases from the custom AnimationPhase type. Then change the content based on the phase by applying the scaleEffect(_:anchor:) and offset(x:y:) modifiers. The values passed into these modifiers come from the computed properties, which helps keep the view code more readable. -->
 
 ## KeyframeAnimator
-
--
