@@ -14,6 +14,7 @@
 ### 2段階でアニメーションする
 
 「上に移動する」「下に移動する」という2つのフェーズが存在する場合、Bool値で状態遷移を表現できる
+[phaseAnimator(_:content:animation:)](https://developer.apple.com/documentation/swiftui/view/phaseanimator(_:content:animation:))を使う
 
 ```Swift
 struct TwoPhaseAnimationView: View {
@@ -31,7 +32,7 @@ struct TwoPhaseAnimationView: View {
 }
 ```
 
-ループさせず再生のトリガーを設定するには、 phaseAnimator(_:trigger:content:animation:) を使う
+ループさせず再生のトリガーを設定するには、[phaseAnimator(_:trigger:content:animation:)](https://developer.apple.com/documentation/swiftui/view/phaseanimator(_:trigger:content:animation:))を使う
 
 ```Swift
 struct TwoPhaseAnimationView: View {
