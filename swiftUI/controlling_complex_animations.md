@@ -21,11 +21,35 @@ struct TwoPhaseAnimationView: View {
 
     var body: some View {
         EmojiView(emoji: emoji)
-            // 配列で渡した2つのフェーズをループする
+            // 配列で渡した2つのフェーズをループする. 配列順に再生する
             .phaseAnimator([false, true]) { content, phase in
                 // フェーズのBool値によって、 -40.0 と 0.0 で切り替わる
-                // .offset　modifier は表示した場所から指定した分だけズラす
+                // .offset　modifierは表示した場所から指定した分だけズラす
                 content.offset(y: phase ? -40.0 : 0.0)
+            }
+    }
+}
+```
+
+ループさせず再生のトリガーを設定するには、 phaseAnimator(_:trigger:content:animation:) を使う
+
+```Swift
+struct TwoPhaseAnimationView: View {
+    var emoji: String
+    @State private var likeCount = 1
+
+    var body: some View {
+        EmojiView(emoji: emoji)
+            // trigger：　変更を監視するトリガー値を指定する。値（likeCount）が変わるとアニメーションを再生
+            // animation: Animationの種類を指定できる
+            .phaseAnimator([false, true], trigger: likeCount) { content, phase in
+                content.offset(y: phase ? -40.0 : 0.0)
+            } animation: { phase in
+                // フェーズ毎にAnimationを変更している.単に.bouncyと書くだけでも可能
+                phase ? .bouncy : .default
+            }
+            .onTapGesture {
+                likeCount += 1
             }
     }
 }
