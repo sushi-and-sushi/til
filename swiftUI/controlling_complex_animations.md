@@ -117,3 +117,4 @@ struct ThreePhaseAnimationView: View {
 
 ## KeyframeAnimator
 
+アニメーションを適用したいビューに[keyframeAnimator(initialValue:repeating:content:keyframes:)](https://developer.apple.com/documentation/swiftui/view/keyframeanimator(initialvalue:repeating:content:keyframes:))もしくは[keyframeAnimator(initialValue:trigger:content:keyframes:)](https://developer.apple.com/documentation/swiftui/view/keyframeanimator(initialvalue:trigger:content:keyframes:))
