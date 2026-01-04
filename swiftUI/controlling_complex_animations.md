@@ -119,6 +119,8 @@ struct ThreePhaseAnimationView: View {
 
 アニメーションを適用したいビューに[keyframeAnimator(initialValue:repeating:content:keyframes:)](https://developer.apple.com/documentation/swiftui/view/keyframeanimator(initialvalue:repeating:content:keyframes:))または[keyframeAnimator(initialValue:trigger:content:keyframes:)](https://developer.apple.com/documentation/swiftui/view/keyframeanimator(initialvalue:trigger:content:keyframes:))を適用する
 
+Adobe After Effectsで扱う様なキーフレームの概念と同じ様なもので、トラックがあって、そこに値を変更するキーフレームを置いていく。
+
 ```Swift
 struct KeyframeAnimationView: View {
     var emoji: String
