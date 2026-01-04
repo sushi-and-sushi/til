@@ -117,4 +117,70 @@ struct ThreePhaseAnimationView: View {
 
 ## KeyframeAnimator
 
-アニメーションを適用したいビューに[keyframeAnimator(initialValue:repeating:content:keyframes:)](https://developer.apple.com/documentation/swiftui/view/keyframeanimator(initialvalue:repeating:content:keyframes:))もしくは[keyframeAnimator(initialValue:trigger:content:keyframes:)](https://developer.apple.com/documentation/swiftui/view/keyframeanimator(initialvalue:trigger:content:keyframes:))
+アニメーションを適用したいビューに[keyframeAnimator(initialValue:repeating:content:keyframes:)](https://developer.apple.com/documentation/swiftui/view/keyframeanimator(initialvalue:repeating:content:keyframes:))または[keyframeAnimator(initialValue:trigger:content:keyframes:)](https://developer.apple.com/documentation/swiftui/view/keyframeanimator(initialvalue:trigger:content:keyframes:))を適用する
+
+```Swift
+struct KeyframeAnimationView: View {
+    var emoji: String
+    @State private var likeCount = 1
+
+    var body: some View {
+        EmojiView(emoji: emoji)
+            .keyframeAnimator(
+                initialValue: AnimationValues(), // アニメーションで変化させる値の初期値
+                trigger: likeCount
+            ) { content, value in
+                content // アニメーション対象のView
+                    .rotationEffect(value.angle) // アニメーションで変化するvalueのプロパティの値を入力する
+                    .scaleEffect(value.scale)
+                    .scaleEffect(y: value.verticalStretch)
+                    .offset(y: value.verticalOffset)
+            } keyframes: { _ in
+                // キーフレームを整理するトラックを作成。引数には操作したいプロパティへのキーパスを指定
+                KeyframeTrack(\.scale) {
+                    // キーフレームには、LinearKeyframe, SpringKeyframe, CubicKeyframeなど色々ある
+                    // 第一引数にはこのキーフレームで到達する値、第二引数には前の状態からこのキーフレームに到達するまでの時間（秒）を指定
+                    LinearKeyframe(1.0, duration: 0.36)
+                    SpringKeyframe(1.5, duration: 0.8, spring: .bouncy)
+                    SpringKeyframe(1.0, spring: .bouncy)
+                }
+
+                KeyframeTrack(\.verticalOffset) {
+                    LinearKeyframe(0.0, duration: 0.1)
+                    SpringKeyframe(20.0, duration: 0.15, spring: .bouncy)
+                    SpringKeyframe(-60.0, duration: 1.0, spring: .bouncy)
+                    SpringKeyframe(0.0, spring: .bouncy)
+                }
+
+                KeyframeTrack(\.verticalStretch) {
+                    CubicKeyframe(1.0, duration: 0.1)
+                    CubicKeyframe(0.6, duration: 0.15)
+                    CubicKeyframe(1.5, duration: 0.1)
+                    CubicKeyframe(1.05, duration: 0.15)
+                    CubicKeyframe(1.0, duration: 0.88)
+                    CubicKeyframe(0.8, duration: 0.1)
+                    CubicKeyframe(1.04, duration: 0.4)
+                    CubicKeyframe(1.0, duration: 0.22)
+                }
+
+                KeyframeTrack(\.angle) {
+                    CubicKeyframe(.zero, duration: 0.58)
+                    CubicKeyframe(.degrees(16), duration: 0.125)
+                    CubicKeyframe(.degrees(-16), duration: 0.125)
+                    CubicKeyframe(.degrees(16), duration: 0.125)
+                    CubicKeyframe(.zero, duration: 0.125)
+                }
+            }
+            .onTapGesture {
+                likeCount += 1
+            }
+    }
+}
+
+private struct AnimationValues {
+    var scale = 1.0
+    var verticalStretch = 1.0
+    var verticalOffset = 0.0
+    var angle = Angle.zero
+}
+```
