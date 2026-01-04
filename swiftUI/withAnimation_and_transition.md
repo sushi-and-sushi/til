@@ -2,7 +2,7 @@
 
 SwiftUIでシンプルなトランジション、イージングアニメーションを再生させる方法を理解する
 
-## `.transition()` モディファイア
+## `.transition()`
 
 [transition(_:) | Apple Developer Documentation](https://developer.apple.com/documentation/swiftui/view/transition(_:))
 
@@ -37,7 +37,7 @@ struct EasyTransition: View {
   - slide＋透明度の変化、など
   - 例: .transition(.scale.combined(with: .opacity))
 
-## `withAnimation()` モディファイア
+## `withAnimation()`
 
 [withAnimation(_:_:) | Apple Developer Documentation](https://developer.apple.com/documentation/swiftui/withanimation(_:_:))
 
