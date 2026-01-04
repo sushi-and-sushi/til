@@ -1,4 +1,4 @@
-# withAnimation_and_transition
+# controlling_simple_animations
 
 SwiftUIでシンプルなトランジション、イージングアニメーションを再生させる方法を理解する
 
