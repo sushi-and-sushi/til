@@ -1,14 +1,14 @@
 # withAnimation_and_transition
 
-- トランジション効果は重ね掛けできる
-  - slideと透明度の変化と、など
-  - 例: .transition(.scale.combined(with: .opacity))
+SwiftUIでシンプルなトランジション、イージングアニメーションを再生させる方法を理解する
 
 ## `.transition()` モディファイア
 
+[transition(_:) | Apple Developer Documentation](https://developer.apple.com/documentation/swiftui/view/transition(_:))
+
 ビューの表示/非表示時のアニメーションを定義する
-`.opacity`, `.scale`, `.slide`, `.move(edge:)`など、簡単sに使えるものがある
-`AnyTransition`型に準拠すれば、カスタムトランジションも作ることができる
+`.opacity`, `.scale`, `.slide`, `.move(edge:)`など、簡単に使えるものがある
+`AnyTransition`型に準拠すれば、カスタムトランジションを作ることも可能
 
 ### `.transition()` の使用例
 
@@ -21,15 +21,21 @@ struct EasyTransition: View {
             Text("Hello, world!")
                 .transition(.slide)
         }
+
         Button("Toggle") {
             withAnimation {
                 isActive.toggle()
             }
         }
-
     }
 }
 ```
+
+### 気付き
+
+- .combinedを使うとトランジション効果は重ね掛けできる
+  - slide＋透明度の変化、など
+  - 例: .transition(.scale.combined(with: .opacity))
 
 ## `withAnimation()` モディファイア
 
@@ -41,35 +47,29 @@ animationパラメータにAnimation型の値を指定して、時間の経過�
 ## SwiftUIにデフォルトで存在するイージング（Animation）を試す
 
 ```swift
+import SwiftUI
+
 struct AnimationView: View {
     @State private var isActive: Bool = false
     @State private var selectedAnimation: Animation = .animeDefault
 
     var body: some View {
-        VStack {
+        VStack(spacing: 24) {
             Image(systemName: "heart.fill")
                 .foregroundStyle(Color.red)
                 .font(Font.system(size: 100))
                 .offset(x: isActive ? 100 : -100)
-        }
-        .frame(width: 100, height: 100)
-        .padding(24)
 
-        Picker("Animation", selection: $selectedAnimation) {
-            // コレクションを繰り返し呼び出す
-            // enum animation を ForEach で呼び出せる様にする
-            // .allCases は enum に CaseIterable プロトコルに準拠させることで、使えるようになる
-            ForEach(Animation.allCases, id: \.self) { animation in
-                // animation.displayName で String のラベル名を呼び出せる
-                //.tag()は 一意で識別できればいい
-                Text(animation.displayName).tag(animation)
+            Picker("Animation", selection: $selectedAnimation) {
+                ForEach(Animation.allCases, id: \.self) { animation in
+                    Text(animation.displayName).tag(animation)
+                }
             }
-        }
-        .padding(24)
 
-        Button("Toggle") {
-            withAnimation(selectedAnimation.animation) {
-                isActive.toggle()
+            Button("Toggle") {
+                withAnimation(selectedAnimation.animation) {
+                    isActive.toggle()
+                }
             }
         }
     }
@@ -87,9 +87,8 @@ enum Animation: CaseIterable {
     case spring
     case interactiveSpring
 
+    // イージングの指定
     var animation: SwiftUI.Animation {
-        // 型はAnimationだとこのenum自体のことを指してしまう
-        // イージングのAnimation型は、SwiftUI.Animationと書く
         switch self {
             case .animeDefault:
                 return .default
@@ -141,9 +140,3 @@ enum Animation: CaseIterable {
     }
 }
 ```
-
-### `.default`
-
-内実は、`spring(response: 0.55, dampingFraction: 1.0, blendDuration: 0.0)`
-iOS 17, macOS 14, tvOS 17, and watchOS 10 以前は easeInOut。
-後ほど他の種類も確認していきたい。
