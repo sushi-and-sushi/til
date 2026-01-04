@@ -131,7 +131,7 @@ struct KeyframeAnimationView: View {
                 trigger: likeCount
             ) { content, value in
                 content // アニメーション対象のView
-                    .rotationEffect(value.angle) // アニメーションで変化するvalueのプロパティの値を入力する
+                    .rotationEffect(value.angle) // アニメーションで変化するvalueのプロパティの値を利用している
                     .scaleEffect(value.scale)
                     .scaleEffect(y: value.verticalStretch)
                     .offset(y: value.verticalOffset)
