@@ -31,20 +31,23 @@ struct EasyTransition: View {
 }
 ```
 
+<!-- トランジションの種類も網羅したい -->
+
 ### 気付き
 
 - .combinedを使うとトランジション効果は重ね掛けできる
   - slide＋透明度の変化、など
   - 例: .transition(.scale.combined(with: .opacity))
+  - Figmaでは作れない
 
-## `.withAnimation(_:_:)`
+## `withAnimation(_:_:)`
 
 [withAnimation(_:) | Apple Developer Documentation](https://developer.apple.com/documentation/swiftui/withanimation(_:_:))
 
 指定されたイージングアニメーションを使用して、Viewの再計算した結果を返す
 animationパラメータにAnimation型の値を指定して、時間の経過に対する値の変化速度を制御する
 
-## SwiftUIにデフォルトで存在するイージング（Animation）を試す
+### SwiftUIにデフォルトで存在するイージング（Animation）を試す
 
 ```swift
 import SwiftUI
@@ -140,3 +143,46 @@ enum Animation: CaseIterable {
     }
 }
 ```
+
+## `.animation(_:value:)`
+
+[animation(_:value:) | Apple Developer Documentation](https://developer.apple.com/documentation/swiftui/view/animation(_:value:))
+
+SwiftUIらしい宣言的な？記述を重視する書き方？
+
+```Swift
+struct ContentView: View {
+    @State private var isActive: Bool = false
+    @State private var scale: CGFloat = 1.0
+
+    var body: some View {
+        VStack(spacing: 30) {
+            Image(systemName: "heart.fill")
+                .foregroundStyle(Color.red)
+                .font(Font.system(size: 100))
+                .scaleEffect(scale)
+                .animation(
+                    .spring(response: 0.5, dampingFraction: 0.6),
+                    value: scale
+                )
+
+            Button("Toggle") {
+                scale = isActive ? 1.0 : 1.5
+                isActive.toggle()
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+    }
+}
+```
+
+### Animationの種類
+
+#### `.default`
+
+内実は、`spring(response: 0.55, dampingFraction: 1.0, blendDuration: 0.0)`
+iOS 17, macOS 14, tvOS 17, and watchOS 10 以前は easeInOut。
+後ほど他の種類も確認していきたい。
+
+<!-- 他も確認する -->
