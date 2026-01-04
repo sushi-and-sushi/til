@@ -37,11 +37,11 @@ struct EasyTransition: View {
   - slide＋透明度の変化、など
   - 例: .transition(.scale.combined(with: .opacity))
 
-## `.withAnimation(_:)`
+## `.withAnimation(_:_:)`
 
 [withAnimation(_:) | Apple Developer Documentation](https://developer.apple.com/documentation/swiftui/withanimation(_:_:))
 
-指定されたアニメーションを使用して、Viewを再計算した結果を返す
+指定されたイージングアニメーションを使用して、Viewの再計算した結果を返す
 animationパラメータにAnimation型の値を指定して、時間の経過に対する値の変化速度を制御する
 
 ## SwiftUIにデフォルトで存在するイージング（Animation）を試す
