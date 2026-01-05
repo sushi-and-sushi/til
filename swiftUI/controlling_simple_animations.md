@@ -10,22 +10,90 @@ SwiftUIでシンプルなトランジション、イージングアニメーシ�
 `.opacity`, `.scale`, `.slide`, `.move(edge:)`など、簡単に使えるものがある
 `AnyTransition`型に準拠すれば、カスタムトランジションを作ることも可能
 
-### `.transition()` の使用例
+### `.transition()` のイージングを試す
 
 ```swift
-struct EasyTransition: View {
+struct EasyTransitionView: View {
     @State private var isActive: Bool = false
+    @State private var selectedTransition: Transition = .opacity
 
     var body: some View {
-        if isActive {
-            Text("Hello, world!")
-                .transition(.slide)
-        }
-
-        Button("Toggle") {
-            withAnimation {
-                isActive.toggle()
+        VStack(spacing: 24) {
+            VStack {
+                if isActive {
+                    Image(systemName: "heart.fill")
+                        .foregroundStyle(Color.red)
+                        .font(Font.system(size: 100))
+                        .transition(AnyTransition(selectedTransition.transition))
+                }
             }
+            .frame(height: 100)
+
+            Picker("Transition", selection: $selectedTransition) {
+                ForEach(Transition.allCases, id: \.self) { transition in
+                    Text(transition.displayName).tag(transition)
+                }
+            }
+
+            Button("Toggle") {
+                withAnimation {
+                    isActive.toggle()
+                }
+            }
+        }
+    }
+}
+
+enum Transition: CaseIterable {
+    case blurReplace
+    case identity
+    case move
+    case offset
+    case opacity
+    case push
+    case scale
+    case slide
+
+    var transition: any SwiftUI.Transition {
+        switch self {
+            case .blurReplace:
+                return .blurReplace
+            case .identity:
+                return .identity
+            case .move:
+            return .move(edge: .top)
+            case .offset:
+            return .offset(y: 20)
+            case .opacity:
+                return .opacity
+            case .push:
+            return .push(from: .top)
+            case .scale:
+                return .scale
+            case .slide:
+                return .slide
+        }
+    }
+
+    // Pickerでの選択肢用のラベル名
+    var displayName: String {
+        switch self {
+            case .blurReplace:
+                return "Blur Replace"
+            case .identity:
+                return "Identity"
+            case .move:
+                return "Move"
+            case .offset:
+                return "Offset"
+            case .opacity:
+                return "Opacity"
+            case .push:
+                return "Push"
+            case .scale:
+                return "Scale"
+            case .slide:
+                return "Slide"
         }
     }
 }
