@@ -61,13 +61,13 @@ enum Transition: CaseIterable {
             case .identity:
                 return .identity
             case .move:
-            return .move(edge: .top)
+                return .move(edge: .top)
             case .offset:
-            return .offset(y: 20)
+                return .offset(y: 20)
             case .opacity:
                 return .opacity
             case .push:
-            return .push(from: .top)
+                return .push(from: .top)
             case .scale:
                 return .scale
             case .slide:
@@ -101,37 +101,37 @@ enum Transition: CaseIterable {
 
 ### トランジションの種類
 
-#### .blurReplace
+#### `.blurReplace`
 
 表示状態をぼかし効果をかけながら切り替える。綺麗。
 
-#### .identity
+#### `.identity`
 
 表示状態を一瞬で切り替える
 
-#### move(edge:)
+#### `.move(edge:)`
 
 指定したEdgeに一瞬で出現し、表示する座標へ滑らかに移動する。
 非表示時は逆の流れとなる。
 
-#### .offset(x:y:)
+#### `.offset(x:y:)`
 
 表示位置からどれくらい離れて表示するか指定できる.moveみたいなもの
 
-#### .opacity
+#### `.opacity`
 
 表示状態を切り替える際に、透明度変化を滑らかに表現する
 
-#### .push
+#### `.push(from:)`
 
 .moveの様に表示状態を切り替えるが、一緒に透明度変化の効果も表現する
 
-#### .scale
+#### `.scale`
 
 表示は縮小状態から拡大し、非表示は縮小して消える
 .scale(scale:anchor:)でズーム度合いと、効果の起点となる位置を指定可能。
 
-#### .slide
+#### `.slide`
 
 出現する時は左側に現れて指定の座標に移動。非表示になる時は表示位置から右に移動して非表示化
 
@@ -279,12 +279,44 @@ struct ContentView: View {
 }
 ```
 
-### Animationの種類
+### イージングアニメーションの種類
+
+標準のイージングには`duration: TimeInterval`パラメータがあり、イージングの長さを指定可能。
 
 #### `.default`
 
-内実は、`spring(response: 0.55, dampingFraction: 1.0, blendDuration: 0.0)`
-iOS 17, macOS 14, tvOS 17, and watchOS 10 以前は easeInOut。
-後ほど他の種類も確認していきたい。
+内実は`spring(response: 0.55, dampingFraction: 1.0, blendDuration: 0.0)`。
 
-<!-- 他も確認する -->
+iOS 17, macOS 14, tvOS 17, and watchOS 10 以前は easeInOut。
+
+#### `.linear`
+
+線形に移動する。
+Documentでは「機械的な印象を抱かせる」と言われている
+
+#### `.easeIn`
+
+ゆっくり動き始め、動きの終わりに向かって加速する
+
+#### `.easeOut`
+
+動きの始まりに加速し、動きの終わりに向かって減速する。
+勢いがわかりやすくて見やすい気がする。
+
+#### `.easeInOut`
+
+`.easeIn`、`.easeOut`を組み合わせたイージング
+Documentでは「現実世界の物体の動きに自然な動きを実現する」とされている
+自然なので、ユーザーを驚かせずにアニメーションさせることができそう
+
+#### スプリングアニメーション
+
+強度やキャラクター別に用意されており、`.bouncy`、`.smooth`、`.snappy`が存在する。
+カスタマイズできる`.spring`、`.interactiveSpring`、`.interpolatingSpring`も存在する。
+
+- `.bouncy`：弾む力が強い
+- `.smooth`：弾む力が無い
+- `.snappy`：きびきびして、少しだけ弾む力を持つ
+- `.spring`：上記ではニーズに沿わない場合にカスタムするためのアニメーション
+- `.interactiveSpring`：名の通りインタラクティブな操作での使用に向いている。わずかに弾む力があり、素早い
+- `.interpolatingSpring`：減衰振動モデル。表現するためのアニメーションに使えそう。（落ちかけている看板の様なイメージ...?）
