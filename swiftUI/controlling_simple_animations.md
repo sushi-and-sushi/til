@@ -292,6 +292,7 @@ iOS 17, macOS 14, tvOS 17, and watchOS 10 以前は easeInOut。
 #### `.linear`
 
 線形に移動する。
+
 Documentでは「機械的な印象を抱かせる」と言われている
 
 #### `.easeIn`
@@ -301,17 +302,21 @@ Documentでは「機械的な印象を抱かせる」と言われている
 #### `.easeOut`
 
 動きの始まりに加速し、動きの終わりに向かって減速する。
+
 勢いがわかりやすくて見やすい気がする。
 
 #### `.easeInOut`
 
 `.easeIn`、`.easeOut`を組み合わせたイージング
+
 Documentでは「現実世界の物体の動きに自然な動きを実現する」とされている
+
 自然なので、ユーザーを驚かせずにアニメーションさせることができそう
 
 #### スプリングアニメーション
 
 強度やキャラクター別に用意されており、`.bouncy`、`.smooth`、`.snappy`が存在する。
+
 カスタマイズできる`.spring`、`.interactiveSpring`、`.interpolatingSpring`も存在する。
 
 - `.bouncy`：弾む力が強い
