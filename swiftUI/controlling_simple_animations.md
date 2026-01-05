@@ -54,6 +54,7 @@ enum Transition: CaseIterable {
     case scale
     case slide
 
+    // トランジションの指定
     var transition: any SwiftUI.Transition {
         switch self {
             case .blurReplace:
