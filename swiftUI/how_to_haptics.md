@@ -48,11 +48,11 @@ OS標準アプリでよく見られるパターン
 [impact(weight:intensity:) | Apple Developer Documentation](https://developer.apple.com/documentation/swiftui/sensoryfeedback/impact(weight:intensity:))
 
 - [SensoryFeedback.Weight | Apple Developer Documentation](https://developer.apple.com/documentation/swiftui/sensoryfeedback/weight)
-- 重さで振動の質感を表す
-- .light（小さい、軽い素材のUIオブジェクト間の衝突）, .medium（軽すぎず、重すぎない素材のUIオブジェクト間の衝突）, .hard（重い素材のUIオブジェクト間の衝突）から選択できる
+- weightパラメータは重さで振動の質感を表す
+- `.light`（小さい、軽い素材のUIオブジェクト間の衝突）, `.medium`（軽すぎず、重すぎない素材のUIオブジェクト間の衝突）, `.hard`（重い素材のUIオブジェクト間の衝突）から選択できる
 
 [impact(flexibility:intensity:) | Apple Developer Documentation](https://developer.apple.com/documentation/swiftui/sensoryfeedback/impact(flexibility:intensity:))
 
 - [impact(weight:intensity:) | Apple Developer Documentation](https://developer.apple.com/documentation/swiftui/sensoryfeedback/flexibility)
-- impactのflexibilityパラメータは振動の質感を選択する
-- .rigid（硬い素材のUIオブジェクト間の衝突）, .soft（柔らかい素材のUIオブジェクト間の衝突）, .solid（柔らかすぎず、硬すぎない素材のUIオブジェクト間の衝突）から選択できる
+- flexibilityパラメータは振動の質感を選択する
+- `.rigid`（硬い素材のUIオブジェクト間の衝突）, `.soft`（柔らかい素材のUIオブジェクト間の衝突）, `.solid`（柔らかすぎず、硬すぎない素材のUIオブジェクト間の衝突）から選択できる
