@@ -47,3 +47,4 @@ class PlayerModel: NSObject, ObservableObject {
   - 必要なデータを事前に読み込ませることができる。ボタンを押した直後に音声再生することができる
   - 通常はわずかに遅延が発生する
   - 大容量、長時間のファイルは向いていない
+- アセットカタログに入れず、`Bundle.main.url(forResource:withExtension:)`で直接ファイルを指定するのが一般的？
