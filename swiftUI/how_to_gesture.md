@@ -4,11 +4,7 @@
 
 ## ジェスチャを登録する、n回タップを検知する
 
-### View
-
 ```Swift
-import SwiftUI
-
 struct DoubleTapView: View {
     @State private var isdoubleTapped = false
 
@@ -33,4 +29,14 @@ struct DoubleTapView: View {
 }
 ```
 
+## ジェスチャー中/終了時の処理を指定
+
+```Swift
+
+```
+
 ## メモ
+
+[gesture(_:including:)](https://developer.apple.com/documentation/swiftui/view/gesture(_:including:))
+
+- includingパラメータにGestureMaskオブジェクトのプロパティを指定することで、ジェスチャの検知を無効化したり、ビューに登録したジェスチャは使えるがサブビューのジェスチャを無効化したり、利用シーンに合わせて調整することができる
