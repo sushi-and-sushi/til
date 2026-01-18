@@ -32,7 +32,38 @@ struct DoubleTapView: View {
 ## ジェスチャー中/終了時の処理を指定
 
 ```Swift
+struct DragToMoveView: View {
+    // DragGestureで得られる移動距離を格納する変数
+    @State private var offset: CGSize = CGSizeZero
 
+    var body: some View {
+        VStack {
+            Text("Drag to move")
+                .font(.headline)
+
+            Circle()
+                .fill(.red)
+                .frame(width: 100, height: 100)
+                .offset(offset) // ジェスチャーで処理した値を反映
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in // ジェスチャー中の処理を指定。 Valueはジェスチャーによって変化した値
+                            // 移動距離にオフセット値を反映
+                            // ドラッグジェスチャの開始からドラッグジェスチャの現在のイベントまでの合計変換（？）
+                            // https://developer.apple.com/documentation/swiftui/draggesture/value/translation
+                            offset = value.translation
+                        }
+                        .onEnded { _ in // ジェスチャー終了時の処理を指定
+                            withAnimation(.easeInOut) {
+                                offset = .zero // 初期位置に戻す
+                            }
+                        }
+                )
+
+            Text("Drag here!")
+        }
+    }
+}
 ```
 
 ## メモ
