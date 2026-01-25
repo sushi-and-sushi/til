@@ -66,6 +66,36 @@ struct DragToMoveView: View {
 }
 ```
 
+## 長押しを利用する
+
+```Swift
+struct LongPressView: View {
+    // ジェスチャーによる状態の変化を格納する変数
+    @GestureState private var isPressed: Bool = false
+
+    var body: some View {
+        VStack {
+            Text("Long press")
+                .font(.headline)
+
+            Circle()
+                .frame(width: 100, height: 100)
+                .opacity(isPressed ? 0 : 1.0) // gestureの状態によって変化
+                .gesture(LongPressGesture(minimumDuration: 1) // longPressGesuteを登録
+                    .updating($isPressed) { value, state, transaction in
+                        state = value
+                        // アニメーションを伴ってクロージャ内の処理を実行
+                        transaction.animation = Animation.easeOut(duration: 3.0)
+                    }
+                )
+
+            Text("Long press here!")
+        }
+
+    }
+}
+```
+
 ## メモ
 
 [gesture(_:including:)](https://developer.apple.com/documentation/swiftui/view/gesture(_:including:))
