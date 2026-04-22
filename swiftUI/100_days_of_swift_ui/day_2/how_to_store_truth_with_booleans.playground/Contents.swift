@@ -1,6 +1,6 @@
 import Cocoa
 
-// ブール値を使って真実を保存する方法
+// ブール値を使って真実を保存する方法（？）
 
 // これまで見てきた、hasSuffix()、isMultiple(of:)にはブール演算子が紛れ込んでいた
 let fileName = "README.md"
