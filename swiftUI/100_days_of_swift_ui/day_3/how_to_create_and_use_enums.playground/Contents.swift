@@ -6,8 +6,8 @@ import Cocoa
 // ユーザーが曜日を選択できるようにするコードを書いているとする
 var selected = "Monday"
 selected = "Tuesday"
-selected = "January"
-selected = "Friday "
+selected = "January" // 月が入っている
+selected = "Friday " // Fridayの末尾にスペースが入っちゃった
 // 色々入れることができてしまう。このようなことに文字列を使うには、慎重なプログラミングが必要で、効率も悪い。
 // ここで列挙型が登場する
 

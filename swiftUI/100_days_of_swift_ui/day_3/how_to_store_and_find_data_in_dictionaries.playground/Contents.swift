@@ -20,7 +20,7 @@ print("Location: \(employee[2])")
 
 // 配列では値だけを保存していたが、辞書では値に名前をつけることができる
 // 左側の文字列を辞書の「キー」と呼び、右側の文字列を「値」と呼ぶ
-//let employee2 = ["name" : "Taylor Swift", "job" : "Singer", "location" : "Nashvile"]
+//let employee2 = ["name" : "Taylor Swift", "job" : "Singer", "location" : "Nashvile"] // 一行で書ける
 
 let employee2 = [ // 改行もできる
     "name" : "Taylor Swift",
@@ -40,10 +40,11 @@ print(employee2["password"]) // emplyee2に存在しないキー。nilが返っ�
 
 // 読み取ろうとした時、キーが存在しなかった場合の出力を default: で指定できる
 // 値がなかった時、nilを出力するか、default値を出力するか、という2通りの選択肢がある、ということ
+// nameにnilの値が入っている場合は、nilが出力され、nameというキーが見つからなかった場合にdefault値が出力される
 print(employee2["name", default: "Unknown"])
 
 // 他の型も利用できる
-let hasGraduated = ["Eric" : false, "Meave" : true, "Otis" : false]
+let hasGraduated = ["Eric": false, "Meave": true, "Otis": false]
 let olympic = [2012: "London", 2016: "Rio de Janeiro", 2021: "Tokyo"]
 print(olympic[2016, default: "Unknown"])
 
@@ -58,5 +59,6 @@ heights["LeBron James"] = 207
 
 // count()やremoveAll()などの便利な機能が辞書にも備わっており、操作することができる
 print(hasGraduated.count)
+print(heights)
 let emptyHeights = heights.removeAll()
 print(emptyHeights)
